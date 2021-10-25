@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>SdmService-parent</artifactId>
+		<groupId>customer</groupId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>SdmService</artifactId>
+	<packaging>jar</packaging>
+
+	<name>SdmService</name>
+
+	<!-- ACTUAL DEPENDENCIES -->
+	<dependencies>
+		<!-- CDS SPRING BOOT STARTER -->
+		<dependency>
+			<groupId>com.sap.cds</groupId>
+			<artifactId>cds-starter-spring-boot</artifactId>
+		</dependency>
+        <!-- SAP CDS INTEGRATION -->
+        <dependency>
+        <groupId>com.sap.cds</groupId>
+        <artifactId>cds-integration-cloud-sdk</artifactId>
+        </dependency>
+        <dependency>
+        <groupId>com.sap.cloud.sdk.s4hana</groupId>
+        <artifactId>s4hana-all</artifactId>
+        <version>3.46.0</version>
+        </dependency>
+        <!-- SCP CF -->
+        <dependency>
+            <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+            <artifactId>scp-cf</artifactId>
+            <version>3.46.0</version>
+        </dependency>
+
+		<!-- ODATA PROTOCOL ADAPTER -->
+		<dependency>
+			<groupId>com.sap.cds</groupId>
+			<artifactId>cds-adapter-odata-v4</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+        <dependency>
+            <groupId>com.sap.cds</groupId>
+            <artifactId>cds-adapter-odata-v2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.cds</groupId>
+			<artifactId>cds-starter-cloudfoundry</artifactId>
+		</dependency>
+
+        <dependency>
+		    <groupId>org.apache.chemistry.opencmis</groupId>
+			<artifactId>chemistry-opencmis-client-impl</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.chemistry.opencmis</groupId>
+			<artifactId>chemistry-opencmis-client-impl</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+		<!-- Apache commons file upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+        <!-- Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
+        <!-- ODATA V4 CLIENT-->
+        <dependency>
+            <groupId>com.sap.cloud.sdk.datamodel</groupId>
+            <artifactId>odata-v4-core</artifactId>
+            <version>3.46.0</version>
+            </dependency>
+        <dependency>
+            <groupId>com.sap.cloud.sdk.datamodel</groupId>
+            <artifactId>odata-core</artifactId>
+            <version>3.46.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+	
+
+		<!--	Java CFEnv	-->
+		<dependency>
+			<groupId>io.pivotal.cfenv</groupId>
+			<artifactId>java-cfenv-boot</artifactId>
+			<version>2.2.2.RELEASE</version>
+		</dependency>
+
+        <!--	XSUAA Token Client	-->
+		<dependency>
+			<groupId>com.sap.cloud.security.xsuaa</groupId>
+			<artifactId>token-client</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.16</version>
+			<scope>provided</scope>
+		</dependency>
+
+        <!-- new java-security dependencies -->
+        <dependency>
+        <groupId>com.sap.cloud.security.xsuaa</groupId>
+        <artifactId>api</artifactId>
+        <version>2.8.8</version>
+        </dependency>
+        <dependency>
+        <groupId>com.sap.cloud.security</groupId>
+        <artifactId>java-security</artifactId>
+        <version>2.8.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <dependency>
+			<groupId>org.cloudfoundry.identity</groupId>
+			<artifactId>cloudfoundry-identity-client-lib</artifactId>
+			<version>4.19.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpclient</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+        
+         <dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>3.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+         <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>2.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>2.0.2</version>
+            <scope>test</scope>
+        </dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- SPRING BOOT PLUGIN -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>repackage</id>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- STEPS TO BUILD CDS MODEL AND GENERATE POJOs -->
+			<plugin>
+				<groupId>com.sap.cds</groupId>
+				<artifactId>cds-maven-plugin</artifactId>
+				<version>${cds.services.version}</version>
+				<executions>
+					<execution>
+						<id>cds.clean</id>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>cds.install-node</id>
+						<goals>
+							<goal>install-node</goal>
+						</goals>
+						<configuration>
+							<skip>${cdsdk-global}</skip>
+							<downloadUrl>${node.url}</downloadUrl>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>install-cdsdk</id>
+						<goals>
+							<goal>install-cdsdk</goal>
+						</goals>
+						<configuration>
+							<skip>${cdsdk-global}</skip>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>cds.build</id>
+						<goals>
+							<goal>cds</goal>
+						</goals>
+						<configuration>
+							<commands>
+								<command>build</command>
+
+								<command>deploy --to sqlite --dry &gt;
+									"${project.basedir}/src/main/resources/schema.sql"</command>
+							</commands>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>cds.generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<basePackage>cds.gen</basePackage>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+            <!--ODATA V4 CLIENT PLUGIN-->
+            <plugin>
+            <groupId>com.sap.cloud.sdk.datamodel</groupId>
+            <artifactId>odata-v4-generator-maven-plugin</artifactId>
+            <!-- Please use the latest version here-->
+            <version>3.29.1</version>
+            <executions>
+                <execution>
+                    <id>generate-consumption</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                    <configuration>
+                        <inputDirectory>${project.basedir}/edmx</inputDirectory>
+                        <outputDirectory>${project.build.directory}/vdm</outputDirectory>
+                        <deleteOutputDirectory>true</deleteOutputDirectory>
+                        <packageName>com.sdmservice.vdm</packageName>
+                        <defaultBasePath>odata/v4/</defaultBasePath>
+                        <compileScope>COMPILE</compileScope>
+                        <serviceMethodsPerEntitySet>true</serviceMethodsPerEntitySet>
+                        <!-- (Optional) You can add a custom copyright header:
+                        <copyrightHeader>Copyright (c) this year, my company</copyrightHeader>
+
+                        Or use the SAP copyright header:
+                        <sapCopyrightHeader>true</sapCopyrightHeader>
+                        -->
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+
+    <plugin>
+    <groupId>com.sap.cloud.sdk.datamodel</groupId>
+    <artifactId>odata-generator-maven-plugin</artifactId>
+    <!-- Please use the latest version here-->
+    <version>3.29.1</version>
+    <executions>
+        <execution>
+            <id>generate-consumption</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <inputDirectory>${project.basedir}/edmx</inputDirectory>
+                <outputDirectory>${project.build.directory}/vdm</outputDirectory>
+                <deleteOutputDirectory>true</deleteOutputDirectory>
+                <packageName>com.sdmservice.vdm</packageName>
+                <defaultBasePath>odata/v2/</defaultBasePath>
+                <compileScope>COMPILE</compileScope>
+                <serviceMethodsPerEntitySet>true</serviceMethodsPerEntitySet>
+                <!-- (Optional) You can add a custom copyright header:
+                <copyrightHeader>Copyright (c) this year, my company</copyrightHeader>
+
+                Or use the SAP copyright header:
+                <sapCopyrightHeader>true</sapCopyrightHeader>
+                -->
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<!-- A profile that uses global installation of @sap/cds-dk -->
+		<profile>
+			<id>cdsdk-global</id>
+			<properties>
+				<cdsdk-global>true</cdsdk-global>
+			</properties>
+		</profile>
+	</profiles>
+</project>

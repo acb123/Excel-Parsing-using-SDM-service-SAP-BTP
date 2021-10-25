@@ -1,0 +1,1413 @@
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="1.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+<Schema Namespace="UploadClearingTradingBrokerStatementService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+<EntityType Name="BrokerStatementHeader">
+<Key>
+<PropertyRef Name="statementID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="statementID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="brokerID" Type="Edm.String" MaxLength="40"/>
+<Property Name="accountNumber" Type="Edm.String" MaxLength="30"/>
+<Property Name="statementDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="activityFromDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="activityToDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="statementState" Type="Edm.Int32"/>
+<Property Name="statementType" Type="Edm.Int32"/>
+<Property Name="reconTriggered" Type="Edm.Boolean"/>
+<Property Name="statementUploadedBy" Type="Edm.String" MaxLength="40"/>
+<NavigationProperty Name="recon" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader_statement" FromRole="BrokerStatementHeader" ToRole="ClearingReconciliationHeader"/>
+<NavigationProperty Name="brokerStatementConfirmation" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation_brokerStatementHeader" FromRole="BrokerStatementHeader" ToRole="ClearingBrokerStatementConfirmation"/>
+<NavigationProperty Name="brokerStatementOptionExercise" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise_brokerStatementHeader" FromRole="BrokerStatementHeader" ToRole="ClearingBrokerStatementOptionExercise"/>
+<NavigationProperty Name="brokerStatementLongShortMatch" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch_brokerStatementHeader" FromRole="BrokerStatementHeader" ToRole="ClearingBrokerStatementLongShortMatch"/>
+<NavigationProperty Name="brokerStatementOpenPosition" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition_brokerStatementHeader" FromRole="BrokerStatementHeader" ToRole="ClearingBrokerStatementOpenPosition"/>
+</EntityType>
+<EntityType Name="ClearingBrokerStatementConfirmation">
+<Key>
+<PropertyRef Name="confirmationID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="confirmationID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="productCodeExchange" Type="Edm.String" MaxLength="13"/>
+<Property Name="noOfContracts" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="tradeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="derivativeCategory" Type="Edm.Int32"/>
+<Property Name="brokerStatementHeader_statementID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="brokerStatementHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation_brokerStatementHeader" FromRole="ClearingBrokerStatementConfirmation" ToRole="BrokerStatementHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation_currency" FromRole="ClearingBrokerStatementConfirmation" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingBrokerStatementLongShortMatch">
+<Key>
+<PropertyRef Name="longShortMatchID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="longShortMatchID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="productCodeExchange" Type="Edm.String" MaxLength="13"/>
+<Property Name="noOfContracts" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="tradeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="derivativeCategory" Type="Edm.Int32"/>
+<Property Name="brokerStatementHeader_statementID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="brokerStatementHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch_brokerStatementHeader" FromRole="ClearingBrokerStatementLongShortMatch" ToRole="BrokerStatementHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch_currency" FromRole="ClearingBrokerStatementLongShortMatch" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingBrokerStatementOpenPosition">
+<Key>
+<PropertyRef Name="openPositionID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="openPositionID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="productCodeExchange" Type="Edm.String" MaxLength="13"/>
+<Property Name="noOfContracts" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="tradeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="derivativeCategory" Type="Edm.Int32"/>
+<Property Name="brokerStatementHeader_statementID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="brokerStatementHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition_brokerStatementHeader" FromRole="ClearingBrokerStatementOpenPosition" ToRole="BrokerStatementHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition_currency" FromRole="ClearingBrokerStatementOpenPosition" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingBrokerStatementOptionExercise">
+<Key>
+<PropertyRef Name="optionExerciseID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="optionExerciseID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="productCodeExchange" Type="Edm.String" MaxLength="13"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="totalPosition" Type="Edm.Int32"/>
+<Property Name="remPosition" Type="Edm.Int32"/>
+<Property Name="exercisedPosition" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="settlementPrice" Type="Edm.Double"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="exerciseDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="settlementType" Type="Edm.Int32"/>
+<Property Name="brokerStatementHeader_statementID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="brokerStatementHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise_brokerStatementHeader" FromRole="ClearingBrokerStatementOptionExercise" ToRole="BrokerStatementHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise_currency" FromRole="ClearingBrokerStatementOptionExercise" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingReconciliationHeader">
+<Key>
+<PropertyRef Name="reconID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="reconID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="reconVersion" Type="Edm.Int32"/>
+<Property Name="statementReconStatus" Type="Edm.Int32"/>
+<Property Name="mismatchedKPI" Type="Edm.Int32"/>
+<Property Name="mismatchedKPIPosition" Type="Edm.Int32"/>
+<Property Name="missingKPIPosition" Type="Edm.Int32"/>
+<Property Name="missingKPIStatement" Type="Edm.Int32"/>
+<Property Name="matchedKPI" Type="Edm.Int32"/>
+<Property Name="matchedKPIPosition" Type="Edm.Int32"/>
+<Property Name="statement_statementID" Type="Edm.Guid"/>
+<NavigationProperty Name="statement" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader_statement" FromRole="ClearingReconciliationHeader" ToRole="BrokerStatementHeader"/>
+<NavigationProperty Name="reconItemConfirmation" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation_reconciliationHeader" FromRole="ClearingReconciliationHeader" ToRole="ClearingReconciliationItemConfirmation"/>
+<NavigationProperty Name="reconItemOptionExercise" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise_reconciliationHeader" FromRole="ClearingReconciliationHeader" ToRole="ClearingReconciliationItemOptionExercise"/>
+<NavigationProperty Name="reconItemOpenPosition" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition_reconciliationHeader" FromRole="ClearingReconciliationHeader" ToRole="ClearingReconciliationItemOpenPosition"/>
+</EntityType>
+<EntityType Name="ClearingReconciliationItemConfirmation">
+<Key>
+<PropertyRef Name="reconConfirmationItemID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="reconConfirmationItemID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="confirmationNumber" Type="Edm.String" MaxLength="30"/>
+<Property Name="confirmationUUID" Type="Edm.Guid"/>
+<Property Name="reconCategory" Type="Edm.Int32"/>
+<Property Name="reconItemMatchID" Type="Edm.String" MaxLength="10"/>
+<Property Name="reconMode" Type="Edm.Int32"/>
+<Property Name="initialReconGroup" Type="Edm.Int32"/>
+<Property Name="reconGroup" Type="Edm.Int32"/>
+<Property Name="productCode" Type="Edm.String" MaxLength="13"/>
+<Property Name="noOfContracts" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="tradeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="derivativeCategory" Type="Edm.Int32"/>
+<Property Name="system" Type="Edm.String" MaxLength="100"/>
+<Property Name="reconciliationHeader_reconID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="reconciliationHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation_reconciliationHeader" FromRole="ClearingReconciliationItemConfirmation" ToRole="ClearingReconciliationHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation_currency" FromRole="ClearingReconciliationItemConfirmation" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingReconciliationItemOpenPosition">
+<Key>
+<PropertyRef Name="reconOpenPositionItemID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="reconOpenPositionItemID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="openPositionNumber" Type="Edm.String" MaxLength="30"/>
+<Property Name="openPositionUUID" Type="Edm.Guid"/>
+<Property Name="reconCategory" Type="Edm.Int32"/>
+<Property Name="reconItemMatchID" Type="Edm.String" MaxLength="10"/>
+<Property Name="reconMode" Type="Edm.Int32"/>
+<Property Name="initialReconGroup" Type="Edm.Int32"/>
+<Property Name="reconGroup" Type="Edm.Int32"/>
+<Property Name="productCode" Type="Edm.String" MaxLength="13"/>
+<Property Name="noOfContracts" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="tradeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="derivativeCategory" Type="Edm.Int32"/>
+<Property Name="system" Type="Edm.String" MaxLength="100"/>
+<Property Name="reconciliationHeader_reconID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="reconciliationHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition_reconciliationHeader" FromRole="ClearingReconciliationItemOpenPosition" ToRole="ClearingReconciliationHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition_currency" FromRole="ClearingReconciliationItemOpenPosition" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="ClearingReconciliationItemOptionExercise">
+<Key>
+<PropertyRef Name="reconOptionExerciseItemID"/>
+</Key>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="reconOptionExerciseItemID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="optionExerciseNumber" Type="Edm.String" MaxLength="30"/>
+<Property Name="optionExericeUUID" Type="Edm.Guid"/>
+<Property Name="reconCategory" Type="Edm.Int32"/>
+<Property Name="reconItemMatchID" Type="Edm.String" MaxLength="10"/>
+<Property Name="reconMode" Type="Edm.Int32"/>
+<Property Name="initialReconGroup" Type="Edm.Int32"/>
+<Property Name="reconGroup" Type="Edm.Int32"/>
+<Property Name="productCode" Type="Edm.String" MaxLength="13"/>
+<Property Name="totalPosition" Type="Edm.Int32"/>
+<Property Name="remPosition" Type="Edm.Int32"/>
+<Property Name="exercisedPosition" Type="Edm.Int32"/>
+<Property Name="direction" Type="Edm.String" MaxLength="1"/>
+<Property Name="contractPrice" Type="Edm.Double"/>
+<Property Name="settlementPrice" Type="Edm.Double"/>
+<Property Name="strikePrice" Type="Edm.Double"/>
+<Property Name="putCallIndicator" Type="Edm.Int32"/>
+<Property Name="exerciseDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="productSymbol" Type="Edm.String" MaxLength="4"/>
+<Property Name="maturityDate" Type="Edm.DateTime" sap:display-format="Date"/>
+<Property Name="settlementType" Type="Edm.Int32"/>
+<Property Name="system" Type="Edm.String" MaxLength="100"/>
+<Property Name="reconciliationHeader_reconID" Type="Edm.Guid"/>
+<Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+<NavigationProperty Name="reconciliationHeader" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise_reconciliationHeader" FromRole="ClearingReconciliationItemOptionExercise" ToRole="ClearingReconciliationHeader"/>
+<NavigationProperty Name="currency" Relationship="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise_currency" FromRole="ClearingReconciliationItemOptionExercise" ToRole="Currencies"/>
+</EntityType>
+<EntityType Name="Currencies">
+<Key>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+<NavigationProperty Name="texts" Relationship="UploadClearingTradingBrokerStatementService.Currencies_texts_1" FromRole="Currencies" ToRole="Currencies_texts"/>
+<NavigationProperty Name="localized" Relationship="UploadClearingTradingBrokerStatementService.Currencies_localized" FromRole="Currencies" ToRole="Currencies_texts"/>
+</EntityType>
+<EntityType Name="Currencies_texts">
+<Key>
+<PropertyRef Name="locale"/>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+</EntityType>
+<Association Name="ClearingBrokerStatementConfirmation_brokerStatementHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation" Multiplicity="*" Role="ClearingBrokerStatementConfirmation">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.BrokerStatementHeader" Multiplicity="0..1" Role="BrokerStatementHeader"/>
+<ReferentialConstraint>
+<Principal Role="BrokerStatementHeader">
+<PropertyRef Name="statementID"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementConfirmation">
+<PropertyRef Name="brokerStatementHeader_statementID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementConfirmation_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation" Multiplicity="*" Role="ClearingBrokerStatementConfirmation"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementConfirmation">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementLongShortMatch_brokerStatementHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch" Multiplicity="*" Role="ClearingBrokerStatementLongShortMatch">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.BrokerStatementHeader" Multiplicity="0..1" Role="BrokerStatementHeader"/>
+<ReferentialConstraint>
+<Principal Role="BrokerStatementHeader">
+<PropertyRef Name="statementID"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementLongShortMatch">
+<PropertyRef Name="brokerStatementHeader_statementID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementLongShortMatch_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch" Multiplicity="*" Role="ClearingBrokerStatementLongShortMatch"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementLongShortMatch">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementOpenPosition_brokerStatementHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition" Multiplicity="*" Role="ClearingBrokerStatementOpenPosition">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.BrokerStatementHeader" Multiplicity="0..1" Role="BrokerStatementHeader"/>
+<ReferentialConstraint>
+<Principal Role="BrokerStatementHeader">
+<PropertyRef Name="statementID"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementOpenPosition">
+<PropertyRef Name="brokerStatementHeader_statementID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementOpenPosition_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition" Multiplicity="*" Role="ClearingBrokerStatementOpenPosition"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementOpenPosition">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementOptionExercise_brokerStatementHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise" Multiplicity="*" Role="ClearingBrokerStatementOptionExercise">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.BrokerStatementHeader" Multiplicity="0..1" Role="BrokerStatementHeader"/>
+<ReferentialConstraint>
+<Principal Role="BrokerStatementHeader">
+<PropertyRef Name="statementID"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementOptionExercise">
+<PropertyRef Name="brokerStatementHeader_statementID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingBrokerStatementOptionExercise_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise" Multiplicity="*" Role="ClearingBrokerStatementOptionExercise"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingBrokerStatementOptionExercise">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationHeader_statement">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader" Multiplicity="*" Role="ClearingReconciliationHeader">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.BrokerStatementHeader" Multiplicity="0..1" Role="BrokerStatementHeader"/>
+<ReferentialConstraint>
+<Principal Role="BrokerStatementHeader">
+<PropertyRef Name="statementID"/>
+</Principal>
+<Dependent Role="ClearingReconciliationHeader">
+<PropertyRef Name="statement_statementID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemConfirmation_reconciliationHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation" Multiplicity="*" Role="ClearingReconciliationItemConfirmation">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader" Multiplicity="0..1" Role="ClearingReconciliationHeader"/>
+<ReferentialConstraint>
+<Principal Role="ClearingReconciliationHeader">
+<PropertyRef Name="reconID"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemConfirmation">
+<PropertyRef Name="reconciliationHeader_reconID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemConfirmation_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation" Multiplicity="*" Role="ClearingReconciliationItemConfirmation"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemConfirmation">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemOpenPosition_reconciliationHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition" Multiplicity="*" Role="ClearingReconciliationItemOpenPosition">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader" Multiplicity="0..1" Role="ClearingReconciliationHeader"/>
+<ReferentialConstraint>
+<Principal Role="ClearingReconciliationHeader">
+<PropertyRef Name="reconID"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemOpenPosition">
+<PropertyRef Name="reconciliationHeader_reconID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemOpenPosition_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition" Multiplicity="*" Role="ClearingReconciliationItemOpenPosition"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemOpenPosition">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemOptionExercise_reconciliationHeader">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise" Multiplicity="*" Role="ClearingReconciliationItemOptionExercise">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader" Multiplicity="0..1" Role="ClearingReconciliationHeader"/>
+<ReferentialConstraint>
+<Principal Role="ClearingReconciliationHeader">
+<PropertyRef Name="reconID"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemOptionExercise">
+<PropertyRef Name="reconciliationHeader_reconID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="ClearingReconciliationItemOptionExercise_currency">
+<End Type="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise" Multiplicity="*" Role="ClearingReconciliationItemOptionExercise"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="0..1" Role="Currencies"/>
+<ReferentialConstraint>
+<Principal Role="Currencies">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="ClearingReconciliationItemOptionExercise">
+<PropertyRef Name="currency_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="Currencies_texts_1">
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="*" Role="Currencies"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies_texts" Multiplicity="*" Role="Currencies_texts">
+<OnDelete Action="Cascade"/>
+</End>
+</Association>
+<Association Name="Currencies_localized">
+<End Type="UploadClearingTradingBrokerStatementService.Currencies" Multiplicity="*" Role="Currencies"/>
+<End Type="UploadClearingTradingBrokerStatementService.Currencies_texts" Multiplicity="0..1" Role="Currencies_texts"/>
+</Association>
+<EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+<EntitySet Name="BrokerStatementHeader" EntityType="UploadClearingTradingBrokerStatementService.BrokerStatementHeader"/>
+<EntitySet Name="ClearingBrokerStatementConfirmation" EntityType="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation"/>
+<EntitySet Name="ClearingBrokerStatementLongShortMatch" EntityType="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch"/>
+<EntitySet Name="ClearingBrokerStatementOpenPosition" EntityType="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition"/>
+<EntitySet Name="ClearingBrokerStatementOptionExercise" EntityType="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise"/>
+<EntitySet Name="ClearingReconciliationHeader" EntityType="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader"/>
+<EntitySet Name="ClearingReconciliationItemConfirmation" EntityType="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation"/>
+<EntitySet Name="ClearingReconciliationItemOpenPosition" EntityType="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition"/>
+<EntitySet Name="ClearingReconciliationItemOptionExercise" EntityType="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise"/>
+<EntitySet Name="Currencies" EntityType="UploadClearingTradingBrokerStatementService.Currencies"/>
+<EntitySet Name="Currencies_texts" EntityType="UploadClearingTradingBrokerStatementService.Currencies_texts"/>
+<AssociationSet Name="ClearingBrokerStatementConfirmation_brokerStatementHeader" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation_brokerStatementHeader">
+<End EntitySet="ClearingBrokerStatementConfirmation" Role="ClearingBrokerStatementConfirmation"/>
+<End EntitySet="BrokerStatementHeader" Role="BrokerStatementHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementConfirmation_currency" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation_currency">
+<End EntitySet="ClearingBrokerStatementConfirmation" Role="ClearingBrokerStatementConfirmation"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementLongShortMatch_brokerStatementHeader" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch_brokerStatementHeader">
+<End EntitySet="ClearingBrokerStatementLongShortMatch" Role="ClearingBrokerStatementLongShortMatch"/>
+<End EntitySet="BrokerStatementHeader" Role="BrokerStatementHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementLongShortMatch_currency" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch_currency">
+<End EntitySet="ClearingBrokerStatementLongShortMatch" Role="ClearingBrokerStatementLongShortMatch"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementOpenPosition_brokerStatementHeader" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition_brokerStatementHeader">
+<End EntitySet="ClearingBrokerStatementOpenPosition" Role="ClearingBrokerStatementOpenPosition"/>
+<End EntitySet="BrokerStatementHeader" Role="BrokerStatementHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementOpenPosition_currency" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition_currency">
+<End EntitySet="ClearingBrokerStatementOpenPosition" Role="ClearingBrokerStatementOpenPosition"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementOptionExercise_brokerStatementHeader" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise_brokerStatementHeader">
+<End EntitySet="ClearingBrokerStatementOptionExercise" Role="ClearingBrokerStatementOptionExercise"/>
+<End EntitySet="BrokerStatementHeader" Role="BrokerStatementHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingBrokerStatementOptionExercise_currency" Association="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise_currency">
+<End EntitySet="ClearingBrokerStatementOptionExercise" Role="ClearingBrokerStatementOptionExercise"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationHeader_statement" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader_statement">
+<End EntitySet="ClearingReconciliationHeader" Role="ClearingReconciliationHeader"/>
+<End EntitySet="BrokerStatementHeader" Role="BrokerStatementHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemConfirmation_reconciliationHeader" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation_reconciliationHeader">
+<End EntitySet="ClearingReconciliationItemConfirmation" Role="ClearingReconciliationItemConfirmation"/>
+<End EntitySet="ClearingReconciliationHeader" Role="ClearingReconciliationHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemConfirmation_currency" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation_currency">
+<End EntitySet="ClearingReconciliationItemConfirmation" Role="ClearingReconciliationItemConfirmation"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemOpenPosition_reconciliationHeader" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition_reconciliationHeader">
+<End EntitySet="ClearingReconciliationItemOpenPosition" Role="ClearingReconciliationItemOpenPosition"/>
+<End EntitySet="ClearingReconciliationHeader" Role="ClearingReconciliationHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemOpenPosition_currency" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition_currency">
+<End EntitySet="ClearingReconciliationItemOpenPosition" Role="ClearingReconciliationItemOpenPosition"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemOptionExercise_reconciliationHeader" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise_reconciliationHeader">
+<End EntitySet="ClearingReconciliationItemOptionExercise" Role="ClearingReconciliationItemOptionExercise"/>
+<End EntitySet="ClearingReconciliationHeader" Role="ClearingReconciliationHeader"/>
+</AssociationSet>
+<AssociationSet Name="ClearingReconciliationItemOptionExercise_currency" Association="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise_currency">
+<End EntitySet="ClearingReconciliationItemOptionExercise" Role="ClearingReconciliationItemOptionExercise"/>
+<End EntitySet="Currencies" Role="Currencies"/>
+</AssociationSet>
+<AssociationSet Name="Currencies_texts_1" Association="UploadClearingTradingBrokerStatementService.Currencies_texts_1">
+<End EntitySet="Currencies" Role="Currencies"/>
+<End EntitySet="Currencies_texts" Role="Currencies_texts"/>
+</AssociationSet>
+<AssociationSet Name="Currencies_localized" Association="UploadClearingTradingBrokerStatementService.Currencies_localized">
+<End EntitySet="Currencies" Role="Currencies"/>
+<End EntitySet="Currencies_texts" Role="Currencies_texts"/>
+</AssociationSet>
+</EntityContainer>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/statementID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Statement ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/brokerID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Business Partner ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/accountNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Account Number" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/statementDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Statement Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/activityFromDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Activity Date From" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/activityToDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Activity Date To" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/statementState" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Statement State" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/statementType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Statement Type" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/reconTriggered" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="ReconTriggered" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.BrokerStatementHeader/statementUploadedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Statement Uploaded By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/confirmationID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="ConfirmationID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/productCodeExchange" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/noOfContracts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="No of Contracts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/tradeDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Trade Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/derivativeCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Derivative Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementConfirmation/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/longShortMatchID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="LongShortMatchID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/productCodeExchange" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/noOfContracts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="No of Contracts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/tradeDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Trade Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/derivativeCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Derivative Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementLongShortMatch/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/openPositionID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="openPositionID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/productCodeExchange" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/noOfContracts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="No of Contracts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/tradeDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Trade Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/derivativeCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Derivative Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOpenPosition/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/optionExerciseID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="OptionExerciseID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/productCodeExchange" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/totalPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Total Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/remPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Remaining Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/exercisedPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Exercised Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/settlementPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Settlement Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Premium" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/exerciseDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Exercise Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/settlementType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Settlement Type" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingBrokerStatementOptionExercise/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/reconID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon UUID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/reconVersion" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon Version" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/statementReconStatus" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Statement Recon Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/mismatchedKPI" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Mismatched KPI Statement" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/mismatchedKPIPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Mismatched KPI Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/missingKPIPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Missing KPI Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/missingKPIStatement" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Missing KPI Statement" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/matchedKPI" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Matched KPI Statement" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/matchedKPIPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Matched KPI Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationHeader/statement_statementID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconConfirmationItemID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon Confirmation Item ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/confirmationNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Backend Confirmation Number" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/confirmationUUID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Confirmation UUID Backend/Broker" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Reconciliation Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconItemMatchID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Match ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconMode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/initialReconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Initial Recon Item Group" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Group Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/productCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/noOfContracts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="No of Contracts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/tradeDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Trade Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/derivativeCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Derivative Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/system" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Data origin System" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/reconciliationHeader_reconID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemConfirmation/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconOpenPositionItemID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon Open Position ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/openPositionNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Backend OpenPosition Number" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/openPositionUUID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="OpenPosition UUID Backend/Broker" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Label" String="Reconciliation Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconItemMatchID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Match ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconMode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/initialReconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Initial Recon Item Group" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Group Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/productCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/noOfContracts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="No of Contracts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/tradeDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Trade Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/derivativeCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Derivative Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/system" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Data origin System" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/reconciliationHeader_reconID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOpenPosition/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Created By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Immutable" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed On" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Changed By" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Computed" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="User's unique ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="UI.HiddenFilter" Bool="true" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconOptionExerciseItemID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon Item Option Exercise ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/optionExerciseNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Backend Option Exercise Number" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/optionExericeUUID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Option Exercise UUID Backend/Broker" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconCategory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Category" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconItemMatchID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Match ID" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconMode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Recon Item Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/initialReconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Initial Recon Item Group" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconGroup" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Reconciliation Item Group Status" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/productCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/totalPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Total Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/remPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Remaining Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/exercisedPosition" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Exercised Position" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/direction" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Direction" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/contractPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Contract Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/settlementPrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Settlement Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/strikePrice" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Strike Price" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/putCallIndicator" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Put/Call Indicator" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/exerciseDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Exercise Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/productSymbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Product Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/maturityDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Maturity Date" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/settlementType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Settlement Type" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/system" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Data origin System" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/reconciliationHeader_reconID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.ClearingReconciliationItemOptionExercise/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.ValueList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Label" String="Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="CollectionPath" String="Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="Parameters" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="Common.ValueListParameterInOut" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="LocalDataProperty" PropertyPath="currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<PropertyValue Property="ValueListProperty" String="code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="ValueListProperty" String="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Core.Description" String="Currency code as specified by ISO 4217" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="UI.Identification" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Record Type="UI.DataField" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<PropertyValue Property="Value" Path="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Description" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Text" Path="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies/symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency Symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies_texts/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Description" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+<Annotations Target="UploadClearingTradingBrokerStatementService.Currencies_texts/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+<Annotation Term="Common.Label" String="Currency Code" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+<Annotation Term="Common.Text" Path="name" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+</Annotations>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

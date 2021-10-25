@@ -1,0 +1,74 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = SdmService
+## language=java; multitenant=false
+## approuter=
+_schema-version: '3.1'
+ID: SdmService
+version: 1.0.0-SNAPSHOT
+description: "SdmService application"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npm install @sap/cds-dk --no-save
+      - npx cds build --production
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: SdmService-srv
+ # ------------------------------------------------------------
+   type: java
+   path: srv
+   properties:
+     SPRING_PROFILES_ACTIVE: cloud
+   build-parameters:
+     builder: custom
+     commands: [ mvn clean package ]
+     build-result: "target/*-exec.[wj]ar"
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+   requires:
+      # Resources extracted from CAP configuration
+      - name: broker-recon-sdm
+      - name: brReconDestination
+      - name: SdmService-Srv-Connectivity
+      - name: xsuaaforjobtest
+
+resources:
+# ------------------------------------------------------------          
+ - name: broker-recon-sdm
+ # ------------------------------------------------------------   
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service-plan: standard
+     service: sdm  
+
+ - name: brReconDestination
+ # ------------------------------------------------------------   
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service-plan: lite
+     service: destination
+
+ - name: SdmService-Srv-Connectivity
+ # ------------------------------------------------------------   
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service-plan: lite
+     service: connectivity
+
+ - name: xsuaaforjobtest
+ # ------------------------------------------------------------   
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service-plan: broker
+     service: xsuaa  
+
+
+
